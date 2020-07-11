@@ -96,29 +96,22 @@ namespace TetrisGame
                         return;
                     }
                     if (key.Key == ConsoleKey.LeftArrow || key.Key == ConsoleKey.A)
-                    {
                         if (CurrentFigureCol >= 1)
-                        {
                             CurrentFigureCol--;
-                        }
-                    }
+                    
                     if (key.Key == ConsoleKey.RightArrow || key.Key == ConsoleKey.D)
-                    {
                         if (CurrentFigureCol < TetrisCols - CurrentFigure.GetLength(1))
-                        {
                             CurrentFigureCol++;
-                        }
-                    }
+                    
                     if (key.Key == ConsoleKey.DownArrow || key.Key == ConsoleKey.S)
                     {
                         Frame = 1;
                         Score += Level;
                         CurrentFigureRow++;
                     }
+                    
                     if (key.Key == ConsoleKey.Spacebar || key.Key == ConsoleKey.UpArrow || key.Key == ConsoleKey.W)
-                    {
                         RotateCurrentFigure();
-                    }
                 }
                 if (Frame % (FramesToMoveFigure - Level) == 0)
                 {
@@ -165,29 +158,22 @@ namespace TetrisGame
                 Level = 1;
                 return;
             }
+            
             if (Level < 1)
-            {
                 Level = 1;
-            }
+            
             if (Level > 10)
-            {
                 Level = 10;
-            }
         }
         static void RotateCurrentFigure()
         {
             var newFigure = new bool[CurrentFigure.GetLength(1), CurrentFigure.GetLength(0)];
             for (int row = 0; row < CurrentFigure.GetLength(0); row++)
-            {
                 for (int col = 0; col < CurrentFigure.GetLength(1); col++)
-                {
                     newFigure[col, CurrentFigure.GetLength(0) - row - 1] = CurrentFigure[row, col];
-                }
-            }
+            
             if (!Collision(newFigure))
-            {
                 CurrentFigure = newFigure;
-            }
         }
         static int CheckForFullLines() 
         {
@@ -196,22 +182,18 @@ namespace TetrisGame
             {
                 bool rowIsFull = true;
                 for (int col = 0; col < TetrisField.GetLength(1); col++)
-                {
                     if (TetrisField[row, col] == false)
                     {
                         rowIsFull = false;
                         break;
                     }
-                }
+                
                 if (rowIsFull)
                 {
                     for (int rowToMove = row; rowToMove >= 1; rowToMove--)
-                    {
                         for (int col = 0; col < TetrisField.GetLength(1); col++)
-                        {
                             TetrisField[rowToMove, col] = TetrisField[rowToMove - 1, col];
-                        }
-                    }
+                    
                     lines++;
                 }
             }
@@ -220,45 +202,31 @@ namespace TetrisGame
         static void AddCurrentFigureToTetrisField()
         {
             for (int row = 0; row < CurrentFigure.GetLength(0); row++)
-            {
                 for (int col = 0; col < CurrentFigure.GetLength(1); col++)
-                {
                     if (CurrentFigure[row, col])
-                    {
                         TetrisField[CurrentFigureRow + row, CurrentFigureCol + col] = true;
-                    }
-                }
-            }
         }
         static bool Collision(bool[,] figure)
         {
             if (CurrentFigureCol > TetrisCols - figure.GetLength(1))
-            {
                 return true;
-            }
+            
             if (CurrentFigureRow + figure.GetLength(0) == TetrisRows)
-            {
                 return true;
-            }
+            
             for (int row = 0; row < figure.GetLength(0); row++)
-            {
                 for (int col = 0; col < figure.GetLength(1); col++)
-                {
                     if (figure[row, col] &&
                         TetrisField[CurrentFigureRow + row + 1, CurrentFigureCol + col])
-                    {
                         return true;
-                    }
-                }
-            }
+            
             return false;
         }
         static void DrawInfo()
         {
             if (Score > HighScore)
-            {
                 HighScore = Score;
-            }
+            
             Write("Level:", 1, 3 + TetrisCols);
             Write(Level.ToString(), 2, 3 + TetrisCols);
             Write("Score:", 4, 3 + TetrisCols);
@@ -282,13 +250,9 @@ namespace TetrisGame
                 for (int col = 0; col < TetrisField.GetLength(1); col++)
                 {
                     if (TetrisField[row, col])
-                    {
                         line += "*";
-                    }
                     else
-                    {
                         line += " ";
-                    }
                 }
                 Write(line, row + 1, 1);
             }
@@ -296,16 +260,9 @@ namespace TetrisGame
         static void DrawCurrentFigure()
         {
             for (int row = 0; row < CurrentFigure.GetLength(0); row++)
-            {
-
                 for (int col = 0; col < CurrentFigure.GetLength(1); col++)
-                {
                     if (CurrentFigure[row, col])
-                    {
                         Write("*", row + 1 + CurrentFigureRow, 1 + CurrentFigureCol + col);
-                    }
-                }
-            }
         }
         static void DrawBorder()
         {
