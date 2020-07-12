@@ -1,4 +1,4 @@
 
-# Hello, im faraj
-# how to use this code?
-# just open a project on ur visual studio and put this codes to your "Program.cs"
+# Hello, i'm faraj
+# How to use this code?
+# Just open a console application on ur visual studio and put this codes to your "Program.cs"
